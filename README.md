@@ -409,8 +409,8 @@ iros-cdd-automation/
 ├── data/                        # 데이터 (gitignore)
 │   ├── bizno_cache.json         # 조회 캐시
 │   ├── bizno_results.json       # bizno 조회 결과
-│   ├── iros_companies.json      # 상호명 목록 (Step 2A용)
-│   └── iros_corpnums.json       # 법인등록번호 목록 (Step 2B용)
+│   ├── iros_companies.json      # 상호명 목록 (Step 2B용)
+│   └── iros_corpnums.json       # 법인등록번호 목록 (Step 2A용)
 ├── logs/                        # 로그 (gitignore)
 │   ├── cart_log.json            # 상호명 기반 장바구니 로그
 │   ├── cart_corpnum_log.json    # 법인등록번호 기반 장바구니 로그
