@@ -150,6 +150,7 @@ def dismiss(page):
                     const t = (b.textContent || b.value || '').trim();
                     const id = b.id || '';
                     if (id.includes('btn_confirm2') && t === '확인') b.click();
+                    else if (id.includes('popup') && id.includes('btn_cancel2') && t === '취소') b.click();
                     else if (id.includes('popup') && id.includes('btn_confirm1') && t === '확인') b.click();
                 }
             });
@@ -251,8 +252,8 @@ def process(page, item):
                 f"document.getElementById('{BTN_NEXT}').click()"
             )
             page.wait_for_timeout(1800)
-            dismiss(page)
 
+            # 팝업 감지는 dismiss 전에 (dismiss가 modal을 hidden으로 바꾸면 감지 불가)
             if detect_security_install(page):
                 return "abort_security"
 
@@ -261,6 +262,8 @@ def process(page, item):
                 page.wait_for_timeout(500)
                 dismiss(page)
                 return "skipped:too_many_results"
+
+            dismiss(page)
 
             state = page.evaluate(f"""() => {{
                 return {{
@@ -306,7 +309,7 @@ def process(page, item):
                 # 다음 버튼이 없는데 결제 버튼도 없음 — 예상 외 상태
                 page.wait_for_timeout(1000)
 
-        return "completed_noclick"
+        return "timeout_nostate"
     except Exception as e:
         return f"error:{str(e)[:100]}"
 
