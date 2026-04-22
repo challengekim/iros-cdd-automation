@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-등기부등본 PDF 추출 파이프라인
+법인등기부등본 PDF 추출 파이프라인
 config.json 경로 기반으로 PDF를 파싱하여 회사명, 주소, 임원, 사업목적,
 등록번호, 설립일, 주식 정보를 추출합니다.
 
 Usage:
-    python3 cdd_extract.py [config.json]
+    python3 corp_info_extract.py [config.json]
 """
 
 import subprocess
@@ -539,7 +539,7 @@ def parse_issued_shares(text: str) -> dict:
 # ─── Step 4: 단일 PDF 파싱 ──────────────────────────────────────
 
 def parse_one_pdf(pdf_path: str) -> dict:
-    """PDF 1건 파싱 → 구조화된 CDD 데이터 반환."""
+    """PDF 1건 파싱 → 구조화된 법인정보 데이터 반환."""
     text = extract_text(pdf_path)
 
     company_kor, company_eng = parse_company_name(text)
@@ -600,10 +600,10 @@ def main():
     cfg = load_config(cfg_path)
 
     pdf_dir = os.path.expanduser(cfg.get('pdf_dir', cfg.get('save_dir', '~/Downloads/등기부등본')))
-    output_path = cfg.get('extract_output', cfg.get('cdd_output', './output/cdd_extract_results.json'))
+    output_path = cfg.get('extract_output', './output/corp_info_extract_results.json')
     errors_path = os.path.splitext(output_path)[0] + '_errors.json'
 
-    print(f"=== 등기부등본 PDF 추출 ===")
+    print(f"=== 법인등기부등본 PDF 추출 ===")
     print(f"PDF 디렉토리: {pdf_dir}")
 
     if not os.path.exists(pdf_dir):

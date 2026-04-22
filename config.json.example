@@ -6,8 +6,16 @@
   "excel_company_column": 12,
   "companies_list": "./data/iros_companies.json",
   "corpnum_list": "./data/iros_corpnums.json",
+  "realty_list": "./data/iros_realties.json",
   "save_dir": "~/Downloads/등기부등본",
+  "realty_save_dir": "~/Downloads/부동산등기부등본",
   "pdf_dir": "~/Downloads/등기부등본",
-  "cdd_output": "./output/CDD_고객정보.xlsx",
-  "extract_output": "./output/cdd_extract_results.json"
+  "report_output": "./output/법인정보_종합리포트.xlsx",
+  "extract_output": "./output/corp_info_extract_results.json",
+  "realty_cart_log": "./logs/cart_realty_log.json",
+  "realty_download_log": "./logs/download_realty_log.json",
+  "cart_log": "./logs/cart_log.json",
+  "cart_corpnum_log": "./logs/cart_corpnum_log.json",
+  "download_log": "./logs/download_log.json",
+  "download_temp": "/tmp/iros_pdf_downloads"
 }

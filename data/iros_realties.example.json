@@ -1,0 +1,20 @@
+[
+  {
+    "label": "우리집_아파트",
+    "address": "서초대로 219",
+    "unit": "101동 1203호",
+    "building_name": ""
+  },
+  {
+    "label": "상가_건물",
+    "address": "세종대로 110",
+    "unit": "",
+    "building_name": "시청별관"
+  },
+  {
+    "label": "토지_예시",
+    "address": "종로 1",
+    "unit": "",
+    "building_name": ""
+  }
+]
