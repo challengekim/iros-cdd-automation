@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""CDD 엑셀 생성
-bizno 결과 + User ID 매핑 + 다운로드 상태 + 등기부등본 PDF 추출을 종합하여 CDD 엑셀을 생성합니다.
-Usage: python3 cdd_generate.py [config.json]
+"""법인정보 종합 리포트 엑셀 생성
+bizno 결과 + User ID 매핑 + 다운로드 상태 + 등기부등본 PDF 추출을 종합하여 법인정보 엑셀을 생성합니다.
+Usage: python3 corp_info_report.py [config.json]
 """
 import json, os, re, sys
 from difflib import SequenceMatcher
@@ -9,7 +9,7 @@ import openpyxl
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 
 try:
-    import cdd_extract
+    import corp_info_extract
     _HAS_EXTRACT = True
 except ImportError:
     _HAS_EXTRACT = False
@@ -147,7 +147,7 @@ def main():
     bizno_path = cfg.get('bizno_results', './data/bizno_results.json')
     download_log_path = cfg.get('download_log', './logs/download_log.json')
     save_dir = cfg.get('save_dir', '~/Downloads/등기부등본')
-    output_path = cfg.get('cdd_output', './output/CDD_고객정보.xlsx')
+    output_path = cfg.get('report_output', cfg.get('cdd_output', './output/법인정보_종합리포트.xlsx'))
 
     # 데이터 로드
     print("데이터 로드 중...")
@@ -200,7 +200,7 @@ def main():
         extract_data = {}
         if matched_file and _HAS_EXTRACT:
             try:
-                extract_data = cdd_extract.parse_one_pdf(matched_file)
+                extract_data = corp_info_extract.parse_one_pdf(matched_file)
             except Exception as e:
                 print(f"  [경고] PDF 추출 실패 ({company_name}): {e}")
 
@@ -276,7 +276,7 @@ def main():
     os.makedirs(os.path.dirname(output_path) or '.', exist_ok=True)
     wb = openpyxl.Workbook()
     ws = wb.active
-    ws.title = "CDD 고객정보"
+    ws.title = "법인정보"
 
     # 헤더
     headers = [
@@ -328,7 +328,7 @@ def main():
     ws.auto_filter.ref = f"A1:Q{len(all_rows)+1}"
 
     wb.save(output_path)
-    print(f"\nCDD 엑셀 저장 완료: {output_path}")
+    print(f"\n법인정보 종합 리포트 저장 완료: {output_path}")
     print(f"총 {len(all_rows)}건 (완료:{len(rows_completed)} / 실패:{len(rows_failed)} / 미완료:{len(rows_rest)})")
 
 
